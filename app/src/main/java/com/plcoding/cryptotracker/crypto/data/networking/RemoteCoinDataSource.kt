@@ -58,7 +58,6 @@ class RemoteCoinDataSource(
                 parameter("interval", "h6")
                 parameter("start", startMillis)
                 parameter("end", endMillis)
-                parameter("apiKey", BuildConfig.API_KEY)
             }
         }.map { response ->
             response.data.map { it.toCoinPrice() }
