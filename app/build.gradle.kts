@@ -26,7 +26,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://rest.coincap.io/v3/\"")
-            buildConfigField("String", "API_KEY", "\"apiKey=7d9f6dbf33c0939c1a40cfd75c3e98f89b3ee7faff465b6d46fcee3120c73260\"")
+            buildConfigField("String", "API_KEY", "\"7d9f6dbf33c0939c1a40cfd75c3e98f89b3ee7faff465b6d46fcee3120c73260\"")
         }
         release {
             isMinifyEnabled = false

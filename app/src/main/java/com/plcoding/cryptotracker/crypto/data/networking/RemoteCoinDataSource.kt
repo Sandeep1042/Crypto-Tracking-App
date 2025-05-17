@@ -1,5 +1,6 @@
 package com.plcoding.cryptotracker.crypto.data.networking
 
+import com.plcoding.cryptotracker.BuildConfig
 import com.plcoding.cryptotracker.core.data.networking.constructUrl
 import com.plcoding.cryptotracker.core.data.networking.safeCall
 import com.plcoding.cryptotracker.core.domain.util.NetworkError
@@ -14,7 +15,9 @@ import com.plcoding.cryptotracker.crypto.domain.CoinDataSource
 import com.plcoding.cryptotracker.crypto.domain.CoinPrice
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
+import io.ktor.http.HttpHeaders
 import java.time.ZoneId
 import java.time.ZonedDateTime
 
@@ -24,9 +27,11 @@ class RemoteCoinDataSource(
 
     override suspend fun getCoins(): Result<List<Coin>, NetworkError> {
         return safeCall<CoinsResponseDto> {
-            httpClient.get(
-                urlString = constructUrl("/assets")
-            )
+            httpClient.get(urlString = constructUrl("/assets")) {
+                headers {
+                    append(HttpHeaders.Authorization, "Bearer ${BuildConfig.API_KEY}")
+                }
+            }
         }.map { response ->
             response.data.map { it.toCoin() }
         }
@@ -53,6 +58,7 @@ class RemoteCoinDataSource(
                 parameter("interval", "h6")
                 parameter("start", startMillis)
                 parameter("end", endMillis)
+                parameter("apiKey", BuildConfig.API_KEY)
             }
         }.map { response ->
             response.data.map { it.toCoinPrice() }
