@@ -57,12 +57,22 @@ fun CoinListItem(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(
-                text = coinUi.symbol,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = contentColor
-            )
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ){
+                Text(
+                    text = coinUi.symbol,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor
+                )
+                Text(
+                    text = "(${coinUi.rank})",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = contentColor
+                )
+            }
             Text(
                 text = coinUi.name,
                 fontSize = 14.sp,
